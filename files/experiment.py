@@ -1,6 +1,6 @@
 #file: experiment.py
 #this is where you will define the experimentClass class, subjectClass class, and monitorClass class
-
+from __future__ import print_function
 import os
 from twisted.internet import reactor
 
@@ -28,7 +28,7 @@ class experimentClass():
    def setMatchings(self):
       #This function is needed, DO NOT DELETE
       #This is run when you stop accepting clients.  This is where you might want to do your random matching, or randomly determine parameters for the experiment.
-      print self.data['subjectIDs']
+      print(self.data['subjectIDs'])
    
    def reconnectingClient(self,client):
       #This function is needed, DO NOT DELETE
@@ -40,7 +40,7 @@ class experimentClass():
       #this is run when you click the "start Experiment" button on the monitor page.
       self.taskDone(message)
       self.startMatch()
-      print "Starting Experiment!"
+      print("Starting Experiment!")
 
    def startMatch(self):
       #add 1 to self.currentMatch
@@ -112,8 +112,8 @@ class monitorClass():
             this.append("$%.02f"%(self.data[subjectID].totalPayoffs))
             table.append(this)
       except Exception as thisExept: 
-         print "can't get table at this time because:"
-         print thisExept
+         print("can't get table at this time because:")
+         print(thisExept)
       return table,titles
    
    def monitorTasks(self):

@@ -3,24 +3,21 @@
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
 function drawButton() {
-    var makeChoiceButton = createDiv("makeChoiceButton");
+    var makeChoiceButton = createAndAddDiv("makeChoiceButton","mainDiv");
     makeChoiceButton.innerHTML = "Click Here to Submit";
-    $("#mainDiv").append(makeChoiceButton);
     clickButton("many","makeChoiceButton",makeChoiceButtonClicked,27);
 }
 
 function drawMatch(currentMatch) {
-    var matchText = createDiv("matchText");
+    var matchText = createAndAddDiv("matchText","mainDiv");
     matchText.innerHTML = "Match #" + currentMatch + "  Time: <time id='timer'>0</time>" + "  Self timer: <time id='selfTimer'>0</time>";
     moveTimer("selfTimer");
     moveTimer("timer");
-    $("#mainDiv").append(matchText);
 }
 
 function drawStatus(number) {
-    var numberClicks = createDiv("numberClicks");
+    var numberClicks = createAndAddDiv("numberClicks","mainDiv");
     numberClicks.innerHTML = "There have been " + number + " clicks so far.";
-    $("#mainDiv").append(numberClicks);
 }
 
 function pleaseMakeChoice(message) {
@@ -77,6 +74,6 @@ function statusManager() {
         drawStatus(thisStatus['numberClicks']);
     } else if (thisStatus["page"] == "postMatch") {
         clearAll();
-        genericScreen("That match is over");
+        genericScreen("That match is over.  The next match will start in <time id='timer'>0</time>");
     }
 }

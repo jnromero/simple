@@ -3,27 +3,31 @@
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
 function drawButton() {
-    var makeChoiceButton = createAndAddDiv("makeChoiceButton","mainDiv");
-    makeChoiceButton.innerHTML = "Click Here to Submit";
+    placeText({"divid":"makeChoiceButton","text":"Click Here to Submit","top":"400px","left":"700px","width":"200px","height":"100px","backgroundColor":"rgba(255,0,0,.11)"})
     clickButton("many","makeChoiceButton",makeChoiceButtonClicked,27);
 }
 
 function drawMatch(currentMatch) {
     var matchText = createAndAddDiv("matchText","mainDiv");
-    matchText.innerHTML = "Match #" + currentMatch + "  Time: <time id='timer'>0</time>" + "  Self timer: <time id='selfTimer'>0</time>";
-    moveTimer("selfTimer");
-    moveTimer("timer");
+    var thisText = "Match #" + currentMatch + "  Time: <time id='everyoneTimer'>0</time>";
+    console.log("sdfsdf",thisText);
+    placeText({"divid":"matchText","text":thisText,"top":"200px","left":"600px","width":"400px","height":"100px","fontSize":"25px"});
+    // moveTimer("selfTimer");
+    moveTimer("everyoneTimer");
 }
 
 function drawStatus(number) {
-    var numberClicks = createAndAddDiv("numberClicks","mainDiv");
-    numberClicks.innerHTML = "There have been " + number + " clicks so far.";
+    var thisText = "There have been " + number + " clicks so far.";
+    placeText({"divid":"numberClicks","text":thisText,"top":"700px","left":"600px","width":"400px","height":"100px","fontSize":"25px"});
 }
 
 function pleaseMakeChoice(message) {
     var matchText = document.getElementById("matchText");
     matchText.style.color = "red";
     matchText.style.fontSize = "200%";
+
+
+
 }
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 

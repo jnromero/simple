@@ -51,7 +51,7 @@ class experimentClass():
       #set current clicks for this match to 0
       self.currentClicks=0
       #this starts a timer for all subject that lasts 120 seconds and runs the function self.endMatch after it expires. 
-      self.initializeTimer("all",120,self.endMatch)
+      self.initializeTimer("everyoneTimer",120,self.endMatch)
       #update status of all clients
       for sid in self.data['subjectIDs']:
          self.data[sid].matchClicks=0
@@ -86,7 +86,7 @@ class experimentClass():
 
    def endMatch(self):
       #wait 10 seconds, and then run self.startMatch to start the next match
-      self.initializeTimer("all",10,self.startMatch)
+      self.initializeTimer("everyoneTimer",10,self.startMatch)
       #update status of all clients
       for sid in self.data['subjectIDs']:
          self.data[sid].status={"page":"postMatch","stage":"noChoices"}

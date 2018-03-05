@@ -2,7 +2,6 @@
 #this is where you will define the experimentClass class, subjectClass class, and monitorClass class
 from __future__ import print_function
 import os
-from twisted.internet import reactor
 
 class experimentClass():
    # - the dictionary self.data will be stored automatically every 10 seconds.
@@ -12,6 +11,7 @@ class experimentClass():
    def __init__(self):
       # initialize the class
       self.setParameters()
+      #these are function that can be run by clicking a button on the monitor page
       self.monitorTaskList=['startExperiment']
    def setParameters(self):
       self.data['exchangeRate']=.1
@@ -40,6 +40,7 @@ class experimentClass():
       
       #this sets the monitor table as defined in the function below
       self.experimentSpecificMonitorTableEntries()
+      #this updates the monitor table
       self.monitorMessage()
 
       self.startMatch()
@@ -55,7 +56,7 @@ class experimentClass():
       #update status of all clients
       for sid in self.data['subjectIDs']:
          self.data[sid].matchClicks=0
-         self.data[sid].status={"page":"game","numberClicks":0,"currentMatch":self.currentMatch}
+         self.data[sid].status={"page":"game","numberClicks":0,"currentMatch":self.currentMatch,"warning":"no"}
          self.updateStatus(sid)
       #update monitor screen:
       self.monitorMessage()
@@ -69,6 +70,9 @@ class experimentClass():
       self.data[sid].matchClicks+=1
       #Record the data to self.data to be saved. This adds a list [currentMatch,#clicks] to self.data[sid].choices     
       self.data[sid].choices.append([self.currentMatch,self.currentClicks])
+      #start a self timer "can be called anything"
+      self.initializeTimer("myTimeCanBeLabledAnything"+sid,5,self.highlightMakeChoice,sid)
+
       #Check if there are more than 10 clicks, if so run self.endMatch, otherwise, run self.updateClicks      
       if self.currentClicks>10:
          self.endMatch()
@@ -78,6 +82,11 @@ class experimentClass():
       #update monitor screen:
       self.monitorMessage()
 
+
+   def highlightMakeChoice(self,sid):
+      self.data[sid].status['warning']="yes"
+      self.updateStatus(sid)
+
    def updateClicks(self):
       #update status of all clients
       for sid in self.data['subjectIDs']:
@@ -86,7 +95,7 @@ class experimentClass():
 
    def endMatch(self):
       #wait 10 seconds, and then run self.startMatch to start the next match
-      self.initializeTimer("everyoneTimer",10,self.startMatch)
+      self.initializeTimer("timer",10,self.startMatch)
       #update status of all clients
       for sid in self.data['subjectIDs']:
          self.data[sid].status={"page":"postMatch","stage":"noChoices"}
@@ -118,4 +127,12 @@ class subjectClass():
 
       #number of clicks this match
       self.matchClicks=0
+
+
+
+if __name__ == "__main__":
+   import imp
+   server = imp.load_source('server', "/Users/jnr/Dropbox/Sites/jnromero.com/Experiments/steep2/python/server.py")
+
+
 
